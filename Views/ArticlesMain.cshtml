@@ -15,3 +15,21 @@
         @Model.Value("articlesBodyText")
     </div>
 </section>
+@{
+	var selection = Umbraco.Content(Guid.Parse("4e1e56e2-293d-4968-8f98-2069bc0cfa96"))
+    .ChildrenOfType("articlesItem")
+    .Where(x => x.IsVisible())
+    .OrderByDescending(x => x.CreateDate);
+}
+<ul>
+	@foreach (var item in selection)
+	{
+        <li>
+            <article class="special">
+                <div class="articletitle"><a href="@item.Url">@item.Name</a></div>
+                <div class="articlepreview">@item.Value("articleContent").ToString().Truncate(100) <a href="@item.Url">Read More..</a></div>
+            </article>
+            <hr/>
+        </li>
+	}
+</ul>
